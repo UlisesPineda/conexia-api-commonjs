@@ -8,8 +8,6 @@ const { createContact, deleteContact, editContact, getContacts, getQueryContact 
 const contactsRouter = Router();
 module.exports = contactsRouter;
 
-// export const contactsRouter = Router();
-
 contactsRouter.use( validateJWT );
 
 contactsRouter.get('/', getContacts );

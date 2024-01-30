@@ -9,7 +9,6 @@ const isAcceptedTerms = require("../helpers/isAcceptedTerms.js");
 
 const authRouter = Router();
 module.exports = authRouter;
-// module.exports = authRouter = Router();
 
 authRouter.post(
     '/register',
