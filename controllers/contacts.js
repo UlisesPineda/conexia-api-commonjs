@@ -28,6 +28,7 @@ const getQueryContact = async( req, res = response ) => {
 
     try {
         const contactos = await ContactModel.find({
+                user: req.uid,
                 $or: [
                     {name: new RegExp(query, 'i')},
                     {phoneOne: new RegExp(query, 'i')}, 
