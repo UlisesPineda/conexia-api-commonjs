@@ -11,7 +11,11 @@ dbMongoConection();
 const app = express();
 const port = process.env.PORT;
 
-app.use( cors() );
+app.use( cors({
+    origin: 'https://conexiapoint.com/',
+    methods: 'GET, POST, PUT, DELETE',
+    credentials: true,
+}) );
 app.use( express.static('public') );
 app.use( express.json() );
 
