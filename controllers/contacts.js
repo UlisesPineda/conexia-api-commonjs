@@ -25,16 +25,17 @@ const getContacts = async( req, res = response ) => {
 const getQueryContact = async( req, res = response ) => {
 
     const { query } = req.body;
+    const cleanQuery = cleanName( query );
 
     try {
         const contactos = await ContactModel.find({
                 user: req.uid,
                 $or: [
-                    {name: new RegExp(query, 'i')},
-                    {phoneOne: new RegExp(query, 'i')}, 
-                    {phoneTwo: new RegExp(query, 'i')}, 
-                    {emailOne: new RegExp(query, 'i')}, 
-                    {emailTwo: new RegExp(query, 'i')}, 
+                    {name: new RegExp(cleanQuery, 'i')},
+                    {phoneOne: new RegExp(cleanQuery, 'i')}, 
+                    {phoneTwo: new RegExp(cleanQuery, 'i')}, 
+                    {emailOne: new RegExp(cleanQuery, 'i')}, 
+                    {emailTwo: new RegExp(cleanQuery, 'i')}, 
                 ]
             });    
         if( contactos.length === 0 ){
@@ -100,9 +101,10 @@ const editContact = async( req, res = response) => {
 
     const idContact = req.params.id;
     const uid = req.uid;
-
+    
     try {
         const contact = await ContactModel.findById( idContact );
+        const cleanedName = cleanName( contact.name );
         if( !contact ) {
             return res.status(404).json({
                 ok: false,
@@ -118,6 +120,7 @@ const editContact = async( req, res = response) => {
         else {
             const newContact = {
                 ...req.body,
+                name: cleanedName,
                 user: uid,
             };
             const updatedContact = await ContactModel.findByIdAndUpdate( idContact, newContact, { new: true } );
