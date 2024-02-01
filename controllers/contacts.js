@@ -101,10 +101,11 @@ const editContact = async( req, res = response) => {
 
     const idContact = req.params.id;
     const uid = req.uid;
+    const { name } = req.body;
+    const cleanedName = cleanName( name );
     
     try {
         const contact = await ContactModel.findById( idContact );
-        const cleanedName = cleanName( contact.name );
         if( !contact ) {
             return res.status(404).json({
                 ok: false,
